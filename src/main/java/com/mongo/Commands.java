@@ -13,6 +13,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Indexes.ascending;
+import static com.mongodb.client.model.Indexes.descending;
+import static com.mongodb.client.model.Sorts.orderBy;
 
 public class Commands {
 
@@ -66,6 +69,18 @@ public class Commands {
         Bson projection3 = Projections.fields(Projections.include("rating"), Projections.excludeId());
         Helper.printJson(coll.find(filter2).projection(projection3).first());
         Helper.printJson(coll.find(filter2).projection(new Document("name",1).append("_id",0)).first());
+
+        //sort and limit
+        Bson sort = new Document("year",-1);
+        List<Document> list1 = coll.find().sort(sort).into(new ArrayList<>());
+        list1.forEach((item) -> Helper.printJson(item));
+        Bson sort1 = descending("year");
+        List<Document> list2 = coll.find().sort(sort1).limit(3).into(new ArrayList<>());
+        list2.forEach((item) -> Helper.printJson(item));
+        Bson sort2 = orderBy(descending("year"), ascending("name"));
+        List<Document> list3 = coll.find().sort(sort2).skip(1).into(new ArrayList<>());
+        list3.forEach((item) -> Helper.printJson(item));
+
     }
 
 }
