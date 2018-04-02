@@ -22,7 +22,7 @@ import static com.mongodb.client.model.Updates.set;
 
 public class Commands {
 
-    public static void main(String[] args) {
+    public static void executeCommands() {
 //      MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(100).build();
 //      MongoClient client = new MongoClient(new ServerAddress(), options);
         MongoClient client = new MongoClient();
